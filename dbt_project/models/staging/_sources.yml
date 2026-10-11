@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: raw
+    database: "{{ env_var('GCP_PROJECT_ID') }}"
+    schema: "{{ env_var('GCP_DATASET_RAW') }}"
+    tables:
+      - name: customers
+        description: "Customer master data with location attributes."
+      - name: orders
+        description: "Order header with status and timestamps."
+      - name: order_items
+        description: "Line items per order (product, seller, price, freight)."
+      - name: order_payments
+        description: "Payment methods and amounts per order."
+      - name: order_reviews
+        description: "Customer reviews with scores and comments."
+      - name: products
+        description: "Product catalog with category and dimensions."
+      - name: sellers
+        description: "Seller master data with location attributes."
+      - name: category_translation
+        description: "Portuguese to English product category translation."

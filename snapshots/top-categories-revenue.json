@@ -1,0 +1,205 @@
+{
+  "generated_at": "2026-10-03T23:12:39+00:00",
+  "rows": [
+    {
+      "category_name_en": "health_beauty",
+      "total_items": 9670,
+      "total_orders": 8836,
+      "total_revenue": 1258681.34,
+      "avg_item_price": 130.16,
+      "avg_freight": 18.88,
+      "freight_to_price_pct": 14.5,
+      "pct_of_total_revenue": 9.38
+    },
+    {
+      "category_name_en": "watches_gifts",
+      "total_items": 5991,
+      "total_orders": 5624,
+      "total_revenue": 1205005.68,
+      "avg_item_price": 201.14,
+      "avg_freight": 16.78,
+      "freight_to_price_pct": 8.34,
+      "pct_of_total_revenue": 8.98
+    },
+    {
+      "category_name_en": "bed_bath_table",
+      "total_items": 11115,
+      "total_orders": 9417,
+      "total_revenue": 1036988.68,
+      "avg_item_price": 93.3,
+      "avg_freight": 18.42,
+      "freight_to_price_pct": 19.74,
+      "pct_of_total_revenue": 7.73
+    },
+    {
+      "category_name_en": "sports_leisure",
+      "total_items": 8641,
+      "total_orders": 7720,
+      "total_revenue": 988048.97,
+      "avg_item_price": 114.34,
+      "avg_freight": 19.51,
+      "freight_to_price_pct": 17.06,
+      "pct_of_total_revenue": 7.37
+    },
+    {
+      "category_name_en": "computers_accessories",
+      "total_items": 7827,
+      "total_orders": 6689,
+      "total_revenue": 911954.32,
+      "avg_item_price": 116.51,
+      "avg_freight": 18.82,
+      "freight_to_price_pct": 16.15,
+      "pct_of_total_revenue": 6.8
+    },
+    {
+      "category_name_en": "furniture_decor",
+      "total_items": 8334,
+      "total_orders": 6449,
+      "total_revenue": 729762.49,
+      "avg_item_price": 87.56,
+      "avg_freight": 20.73,
+      "freight_to_price_pct": 23.67,
+      "pct_of_total_revenue": 5.44
+    },
+    {
+      "category_name_en": "cool_stuff",
+      "total_items": 3796,
+      "total_orders": 3632,
+      "total_revenue": 635290.85,
+      "avg_item_price": 167.36,
+      "avg_freight": 22.14,
+      "freight_to_price_pct": 13.23,
+      "pct_of_total_revenue": 4.74
+    },
+    {
+      "category_name_en": "housewares",
+      "total_items": 6964,
+      "total_orders": 5884,
+      "total_revenue": 632248.66,
+      "avg_item_price": 90.79,
+      "avg_freight": 20.99,
+      "freight_to_price_pct": 23.12,
+      "pct_of_total_revenue": 4.71
+    },
+    {
+      "category_name_en": "auto",
+      "total_items": 4235,
+      "total_orders": 3897,
+      "total_revenue": 592720.11,
+      "avg_item_price": 139.96,
+      "avg_freight": 21.88,
+      "freight_to_price_pct": 15.63,
+      "pct_of_total_revenue": 4.42
+    },
+    {
+      "category_name_en": "garden_tools",
+      "total_items": 4347,
+      "total_orders": 3518,
+      "total_revenue": 485256.46,
+      "avg_item_price": 111.63,
+      "avg_freight": 22.77,
+      "freight_to_price_pct": 20.39,
+      "pct_of_total_revenue": 3.62
+    },
+    {
+      "category_name_en": "toys",
+      "total_items": 4117,
+      "total_orders": 3886,
+      "total_revenue": 483946.6,
+      "avg_item_price": 117.55,
+      "avg_freight": 18.81,
+      "freight_to_price_pct": 16.0,
+      "pct_of_total_revenue": 3.61
+    },
+    {
+      "category_name_en": "baby",
+      "total_items": 3065,
+      "total_orders": 2885,
+      "total_revenue": 411764.89,
+      "avg_item_price": 134.34,
+      "avg_freight": 22.3,
+      "freight_to_price_pct": 16.6,
+      "pct_of_total_revenue": 3.07
+    },
+    {
+      "category_name_en": "perfumery",
+      "total_items": 3419,
+      "total_orders": 3162,
+      "total_revenue": 399124.87,
+      "avg_item_price": 116.74,
+      "avg_freight": 15.86,
+      "freight_to_price_pct": 13.58,
+      "pct_of_total_revenue": 2.98
+    },
+    {
+      "category_name_en": "telephony",
+      "total_items": 4545,
+      "total_orders": 4199,
+      "total_revenue": 323667.53,
+      "avg_item_price": 71.21,
+      "avg_freight": 15.67,
+      "freight_to_price_pct": 22.0,
+      "pct_of_total_revenue": 2.41
+    },
+    {
+      "category_name_en": "office_furniture",
+      "total_items": 1691,
+      "total_orders": 1273,
+      "total_revenue": 273960.7,
+      "avg_item_price": 162.01,
+      "avg_freight": 40.55,
+      "freight_to_price_pct": 25.03,
+      "pct_of_total_revenue": 2.04
+    },
+    {
+      "category_name_en": "stationery",
+      "total_items": 2517,
+      "total_orders": 2311,
+      "total_revenue": 230943.23,
+      "avg_item_price": 91.75,
+      "avg_freight": 18.59,
+      "freight_to_price_pct": 20.26,
+      "pct_of_total_revenue": 1.72
+    },
+    {
+      "category_name_en": "computers",
+      "total_items": 203,
+      "total_orders": 181,
+      "total_revenue": 222963.13,
+      "avg_item_price": 1098.34,
+      "avg_freight": 48.45,
+      "freight_to_price_pct": 4.41,
+      "pct_of_total_revenue": 1.66
+    },
+    {
+      "category_name_en": "pet_shop",
+      "total_items": 1947,
+      "total_orders": 1710,
+      "total_revenue": 214315.41,
+      "avg_item_price": 110.07,
+      "avg_freight": 20.32,
+      "freight_to_price_pct": 18.46,
+      "pct_of_total_revenue": 1.6
+    },
+    {
+      "category_name_en": "musical_instruments",
+      "total_items": 680,
+      "total_orders": 628,
+      "total_revenue": 191498.88,
+      "avg_item_price": 281.62,
+      "avg_freight": 27.41,
+      "freight_to_price_pct": 9.73,
+      "pct_of_total_revenue": 1.43
+    },
+    {
+      "category_name_en": "small_appliances",
+      "total_items": 679,
+      "total_orders": 630,
+      "total_revenue": 190648.58,
+      "avg_item_price": 280.78,
+      "avg_freight": 23.59,
+      "freight_to_price_pct": 8.4,
+      "pct_of_total_revenue": 1.42
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension with location."
+    columns:
+      - name: customer_key
+        tests: [unique, not_null]
+
+  - name: dim_products
+    description: "Product dimension with category translation."
+    columns:
+      - name: product_key
+        tests: [unique, not_null]
+
+  - name: dim_sellers
+    description: "Seller dimension."
+    columns:
+      - name: seller_key
+        tests: [unique, not_null]
+
+  - name: dim_date
+    description: "Date dimension derived from order purchase dates."
+    columns:
+      - name: date_key
+        tests: [unique, not_null]
+
+  - name: fct_orders
+    description: "Order-level fact table."
+    columns:
+      - name: order_key
+        tests: [unique, not_null]
+      - name: customer_key
+        tests: [not_null]
+
+  - name: fct_order_items
+    description: "Order item level fact table. Main fact for category analysis."
+    columns:
+      - name: order_item_key
+        tests: [unique, not_null]
+      - name: order_id
+        tests: [not_null]
+      - name: category_name_en
+        tests: [not_null]
