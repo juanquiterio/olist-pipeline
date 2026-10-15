@@ -156,7 +156,13 @@ tr:last-child td { border-bottom: none; }
   </main>
 
   <script>
-const API_BASE = (["localhost", "127.0.0.1"].includes(location.hostname) && location.port !== "8000") ? "http://localhost:8000" : "";
+// API_BASE:
+//   - local development: http://localhost:8000
+//   - production (Static Site on Render): the Web Service URL
+const API_BASE = (["localhost", "127.0.0.1"].includes(location.hostname))
+  ? "http://localhost:8000"
+  : "https://olist-pipeline.onrender.com";
+
 const TABS = [
   {
     id: "category-cancellations",

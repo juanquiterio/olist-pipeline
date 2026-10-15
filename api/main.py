@@ -13,7 +13,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
 
 from bigquery_client import run_query
 from queries import QUERY_REGISTRY, available_queries, load_query
@@ -25,7 +24,6 @@ log = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SNAPSHOTS_DIR = BASE_DIR / "snapshots"
-FRONTEND_INDEX = BASE_DIR / "frontend" / "index.html"
 
 DATA_SOURCE = os.environ.get("DATA_SOURCE", "bigquery").strip().lower()
 if DATA_SOURCE not in {"bigquery", "snapshot"}:
@@ -34,7 +32,7 @@ if DATA_SOURCE not in {"bigquery", "snapshot"}:
 app = FastAPI(
     title="Olist Pipeline API",
     description="Business queries on top of the Olist star schema (BigQuery + dbt).",
-    version="1.1.0",
+    version="1.2.0",
 )
 
 # Allow any origin for demo purposes (GET only). Restrict in production.
@@ -46,22 +44,20 @@ app.add_middleware(
 )
 
 
+@app.get("/", include_in_schema=False)
+def root() -> dict:
+    """Return API info at the root."""
+    return api_info()
+
+
 @app.get("/api")
 def api_info() -> dict:
     return {
         "service": "Olist Pipeline API",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "data_source": DATA_SOURCE,
         "endpoints": ["/health", "/queries"] + [f"/{name}" for name in available_queries()],
     }
-
-
-@app.get("/", include_in_schema=False)
-def root():
-    """Serve the dashboard if present, otherwise the API description."""
-    if FRONTEND_INDEX.exists():
-        return FileResponse(FRONTEND_INDEX)
-    return api_info()
 
 
 @app.get("/health")
