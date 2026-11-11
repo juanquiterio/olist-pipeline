@@ -2,9 +2,16 @@
 
 An analytics pipeline for the Olist Brazilian e-commerce dataset. Raw CSV files are loaded into BigQuery, modelled with dbt into a star schema, and served through a FastAPI web service and a static dashboard, deployed as two separate services on Render.
 
-**Live dashboard (static site):** https://olist-pipeline-frontend.onrender.com
-**API (web service):** https://olist-pipeline.onrender.com
-**Source:** https://github.com/juanquiterio/olist-pipeline
+## Live demo and media
+
+| | Link |
+|---|---|
+| Live dashboard | [https://olist-pipeline-frontend.onrender.com/](https://olist-pipeline-frontend.onrender.com/) |
+| Video walkthrough | [Olist Analytics Pipeline: BigQuery + dbt + FastAPI](https://youtu.be/cNeKeRg5ia0) |
+
+The demo runs on a free server that sleeps when idle, so the first load can take 30-60 seconds. The page shows a startup message while the server wakes up.
+
+![Olist Analytics dashboard](docs/img/dashboard.png)
 
 ## Problem
 
@@ -20,81 +27,67 @@ The Olist dataset ships as separate CSV files (orders, items, payments, reviews,
 6. **Orchestrate:** `run_pipeline.sh` runs ingestion, `dbt run` and `dbt test` in order.
 
 ## Architecture
+
+```text
 Olist CSV files (Kaggle)
-│ ingest/load_olist.py
-▼
-BigQuery raw_olist
-│ dbt
-▼
+        │  ingest/load_olist.py
+        ▼
+BigQuery  raw_olist
+        │  dbt
+        ▼
 staging (views) ──► intermediate (views) ──► marts (star schema, tables)
-│
-┌───────────────────────┤
-▼ ▼
-analytics/queries/.sql analytics/bi/.sql
-│ │
-│ scripts/export_bi_extracts.py ──► bi/*.csv
-▼
-FastAPI web service
-DATA_SOURCE = bigquery | snapshot
-▲
-│ fetch(API_BASE + "/<endpoint>") (CORS: GET)
-│
-Static dashboard (frontend/index.html)
-
+                                                │
+                        ┌───────────────────────┤
+                        ▼                       ▼
+         analytics/queries/*.sql        analytics/bi/*.sql
+                        │                       │
+                        │            scripts/export_bi_extracts.py ──► bi/*.csv
+                        ▼
+        FastAPI web service
+        DATA_SOURCE = bigquery | snapshot
+                        ▲
+                        │  fetch(API_BASE + "/<endpoint>")   (CORS: GET)
+                        │
+        Static dashboard  (frontend/index.html)
+Deployment topology
 text
-
-## Deployment topology
 Browser
-│
-├─► Render Static Site ──► serves frontend/ (HTML, CSS, JS)
-│
-└─► Render Web Service ──► FastAPI (DATA_SOURCE=snapshot) ──► snapshots/*.json
+  │
+  ├─► Render Static Site ──► serves frontend/   (HTML, CSS, JS)
+  │
+  └─► Render Web Service ──► FastAPI (DATA_SOURCE=snapshot) ──► snapshots/*.json
+Data model
+Table	Grain
+fct_orders	one row per order (99,441 rows): status, delivery days and delay, payment value, review score, cancellation and lateness flags
+fct_order_items	one row per order item (112,650 rows): product, seller, customer, price, freight, category, order-level flags
+dim_customers, dim_sellers, dim_products, dim_date	one row per entity or day
+Layers are configured in dbt_project/dbt_project.yml: staging and intermediate are views, marts are tables.
 
-text
+Business questions and endpoints
+Endpoint	Question
+GET /category-cancellations	Which product categories have the highest cancellation rates?
+GET /delivery-vs-satisfaction	How does delivery delay impact customer satisfaction?
+GET /state-performance	Which Brazilian states have the worst delivery performance?
+GET /top-categories-revenue	Which product categories drive the most revenue?
+Also available: GET /api (service info), GET /health, GET /queries, interactive docs at /docs, and GET /, which serves frontend/index.html when the file is present (handy for local runs).
 
-## Data model
+Definitions used by the API queries: cancellation rate = canceled orders / all orders, late-delivery rate = late orders / all orders. (The BI extracts in bi/ use late orders / delivered orders, which is stated where they are used.)
 
-| Table | Grain |
-|---|---|
-| `fct_orders` | one row per order (99,441 rows): status, delivery days and delay, payment value, review score, cancellation and lateness flags |
-| `fct_order_items` | one row per order item (112,650 rows): product, seller, customer, price, freight, category, order-level flags |
-| `dim_customers`, `dim_sellers`, `dim_products`, `dim_date` | one row per entity or day |
+Two data sources
+The API reads from one of two sources, selected with DATA_SOURCE:
 
-Layers are configured in `dbt_project/dbt_project.yml`: staging and intermediate are views, marts are tables.
+Value	Behaviour
+bigquery (default)	runs the SQL files live against BigQuery
+snapshot	serves pre-computed JSON from snapshots/, no credentials needed
+Snapshots exist because BigQuery sandbox tables expire (60 days by default here). The public web service runs in snapshot mode, so the service account key never leaves the developer's machine. Regenerate the snapshots with python scripts/export_snapshots.py.
 
-## Business questions and endpoints
-
-| Endpoint | Question |
-|---|---|
-| `GET /category-cancellations` | Which product categories have the highest cancellation rates? |
-| `GET /delivery-vs-satisfaction` | How does delivery delay impact customer satisfaction? |
-| `GET /state-performance` | Which Brazilian states have the worst delivery performance? |
-| `GET /top-categories-revenue` | Which product categories drive the most revenue? |
-
-Also available: `GET /api` (service info), `GET /health`, `GET /queries`, and interactive docs at `/docs`. The root `GET /` returns the same JSON as `/api`.
-
-Definitions used by the API queries: cancellation rate = canceled orders / all orders, late-delivery rate = late orders / all orders. (The BI extracts in `bi/` use late orders / delivered orders, which is stated where they are used.)
-
-## Two data sources
-
-The API reads from one of two sources, selected with `DATA_SOURCE`:
-
-| Value | Behaviour |
-|---|---|
-| `bigquery` (default) | runs the SQL files live against BigQuery |
-| `snapshot` | serves pre-computed JSON from `snapshots/`, no credentials needed |
-
-Snapshots exist because BigQuery sandbox tables expire (60 days by default here). The public web service runs in snapshot mode, so the service account key never leaves the developer's machine. Regenerate the snapshots with `python scripts/export_snapshots.py`.
-
-## Stack
-
+Stack
 Python 3.14 · BigQuery · dbt Core · FastAPI · Uvicorn · vanilla HTML/CSS/JS frontend · Bash · Render (static site + web service)
 
-## Running locally
+Running locally
+Prerequisites: a Google Cloud project with BigQuery, a service account key with BigQuery permissions, and the Olist dataset from Kaggle extracted into data/.
 
-Prerequisites: a Google Cloud project with BigQuery, a service account key with BigQuery permissions, and the Olist dataset from Kaggle extracted into `data/`.
-
-```bash
+bash
 git clone https://github.com/juanquiterio/olist-pipeline.git
 cd olist-pipeline
 python3 -m venv .venv && source .venv/bin/activate
